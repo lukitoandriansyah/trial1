@@ -26,14 +26,40 @@ public class MahasiswaController {
     query untuk mengirim sesuatu */
     public DefaultResponse login(@RequestBody LoginDto loginDto){
         DefaultResponse df = new DefaultResponse();
-        Optional<Mahasiswa> optionalMahasiswa = mahasiswaRepository.findByUsernameAndPassword(loginDto.getUname(), loginDto.getPass());
+        //Optional<Mahasiswa> optionalMahasiswa = mahasiswaRepository.findByUsernameAndPassword(loginDto.getUname(), loginDto.getPass());
+        Optional<Mahasiswa> optionalMahasiswaUsername = mahasiswaRepository.findByUsername(loginDto.getUname());
+        Optional<Mahasiswa> optionalMahasiswaPassword = mahasiswaRepository.findByPassword(loginDto.getPass());
 
-        if(optionalMahasiswa.isPresent()){
-            df.setStatus(Boolean.TRUE);
-            df.setMessage("Selamat!!! Anda berhasil Login");
-        }else{
+        if(optionalMahasiswaUsername.isPresent()){
+            if(!optionalMahasiswaPassword.isPresent()){
+                df.setStatus(Boolean.FALSE);
+                df.setMessage("Maaf!!! Password Salah");
+            } else if (optionalMahasiswaPassword.isPresent()) {
+                df.setStatus(Boolean.TRUE);
+                df.setMessage("Selamat!!! Anda berhasil Login");
+            }
+            //df.setStatus(Boolean.TRUE);
+            //df.setMessage("Selamat!!! Anda berhasil Login");
+        }else if(optionalMahasiswaPassword.isPresent()){
+            if(!optionalMahasiswaUsername.isPresent()){
+                df.setStatus(Boolean.FALSE);
+                df.setMessage("Maaf!!! Username Salah");
+            } else if (optionalMahasiswaUsername.isPresent()) {
+                df.setStatus(Boolean.TRUE);
+                df.setMessage("Selamat!!! Anda berhasil Login");
+            }
+        /*else if () {
+
+        } else{
             df.setStatus(Boolean.FALSE);
-            df.setMessage("Maaf!!! Username atau Password Salah");
+            if(optionalMahasiswa.equals(loginDto.getUname()) && !(optionalMahasiswa.equals(loginDto.getPass()))){
+                df.setMessage("Maaf!!! Password Salah");
+            }else if(optionalMahasiswa.equals(loginDto.getPass()) && !(optionalMahasiswa.equals(loginDto.getUname()))){
+                df.setMessage("Maaf!!! Usernname Salah");
+            }else if (!(optionalMahasiswa.equals(loginDto.getPass())) && !(optionalMahasiswa.equals(loginDto.getUname()))){
+                df.setMessage("Maaf!!! Username dan Password Salah");
+            }
+            //df.setMessage("Maaf!!! Username atau Password Salah");*/
         }
 
         return df;

@@ -4,13 +4,13 @@ package com.lukito.trial1.Repository;
 
 import com.lukito.trial1.model.Entity.Mahasiswa;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
 public interface MahasiswaRepository extends JpaRepository <Mahasiswa, String>{
-    Optional<Mahasiswa> findByUsernameAndPassword(String uname, String pass);
+    //Optional<Mahasiswa> findByUsernameAndPassword(String uname, String pass);
+    Optional<Mahasiswa> findByUsername(String uname);
+    Optional<Mahasiswa> findByPassword(String pass);
 
     /*pADANAN atau beberapa penulisan
      KODE TERSEBUT ADALAH SEBAGAI BERIKUT:*/
