@@ -1,4 +1,4 @@
-package com.lukito.trial1.model;
+package com.lukito.trial1.model.Dto;
 
 public class LoginDto {
     private String uname;
